@@ -8,6 +8,29 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/aminkhadhraoui/PROJET-S1-P1.git']]])
             }
         }
+
+
+
+
+
+
+
+
+
+ stage('com'){
+    def mvnHome = tool name: 'Apache Maven 3.6.0', type: 'maven'
+    sh "${mvnHome}/bin/mvn -B -DskipTests clean package"
+  }
+
+
+
+
+
+
+
+
+
+	    
 	 stage('Build & test') {
             steps {
                 sh 'mvn clean package'
