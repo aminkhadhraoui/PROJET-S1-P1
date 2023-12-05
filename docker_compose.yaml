@@ -1,0 +1,32 @@
+version: '3'
+services:
+  mysqldb:
+    image: mysql:8.0.32
+    container_name: mysqldb
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: devops
+
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  springboot-app:
+    image: amin2030/springboot_devops   # Assurez-vous d'utiliser la bonne version de l'image
+    container_name: springboot-app
+    depends_on:
+      - mysqldb
+
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/devopsjdbc:mysql?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+
+
+
+
+volumes:
+  mysql_data:
